@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<script>
+
+var gui       = require('nw.gui');
+var visdiffer = require('./visdiffer.js');
+var pathSep   = require('path').sep;
+
+
+var guiWin = gui.Window.get();
+guiWin.title = gui.App.manifest.name;
+guiWin.show();
+
+document.addEventListener('keydown', function(e){
+    if (e.ctrlKey && e.shiftKey) {
+        switch (e.keyCode) {
+        case 73: // i
+            guiWin.showDevTools();
+            break;
+        }
+    }
+});
+
+</script>
+    <title></title>
+    <link rel="stylesheet" href="assets/pure-min.css">
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+    <div id="content"></div>
+
+    <script src="assets/libs.js"></script>
+    <script src="assets/main.js"></script>
+</body>
+</html>

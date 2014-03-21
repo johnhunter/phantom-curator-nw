@@ -1,0 +1,33 @@
+{
+	"build_systems":
+    [
+        {
+            "cmd":
+            [
+                "cmd.exe",
+                "/c",
+                "grunt",
+                "--no-color"
+            ],
+            "name": "Build node-webkit",
+            "working_dir": "${project_path}"
+        }
+    ],
+    "folders":
+	[
+		{
+			"path": "./"
+		}
+	],
+    "settings":
+    {
+        "binary_file_patterns":
+        [
+            ".pak",
+            ".app"
+        ],
+        "tab_size": 4,
+        "translate_tabs_to_spaces": true,
+        "use_tab_stops": true
+    }
+}
