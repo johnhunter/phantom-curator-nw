@@ -7,10 +7,6 @@ This builds on the original web app [phantom-curator](https://git.niniansolution
 
 ## Get the app
 
-Windows and OSX apps are available here:
-
-~~webkitbuilds/releases/phantom-curator-nw~~
-
 *zip / dmg files are too big to be hosted in github* - for the moment you need to checkout the repo and build
 
 ## Development
@@ -45,7 +41,3 @@ There are 3 builds (default runs all of them):
 To work on code run `grunt build` and then open the app exe in `webkitbuilds/releases/phantom-curator/<os>/phantom-curator`
 
 Once running you can use *Ctrl-Shift-i* to open the debugging console.
-
-## Issues
-
-[phantom-curator-nw/issues](https://git.niniansolutions.com/John-hunter/phantom-curator-nw/issues)
