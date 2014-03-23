@@ -46,6 +46,10 @@ module.exports = React.createClass({
         }
         return false;
     },
+    handleRefresh: function(e){
+        this.getInitialState();
+        return false;
+    },
     handlePathUpdate: function(path){
         storage.setItem('diffPath', path);
         this.getFileList(path);
@@ -64,6 +68,9 @@ module.exports = React.createClass({
                 <header className="navbar">
                     <button className={rebaseBtnClass} type="submit">
                         Rebase selected ({this.state.selectedCount})
+                    </button>
+                    <button className="pure-button" onClick={this.handleRefresh}>
+                        Refresh
                     </button>
                     <FolderPicker path={this.state.path} onSelect={this.handlePathUpdate}>
                         Select visual diff folder
