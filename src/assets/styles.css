@@ -53,6 +53,9 @@ header {
 .navbar > .c-FolderPicker {
     margin-right: .5em;
 }
+button .count {
+    margin-left: .3em;
+}
 
 .diff-path {
     font-family: monospace,serif;

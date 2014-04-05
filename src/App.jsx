@@ -66,14 +66,15 @@ module.exports = React.createClass({
         return (
             <form className="c-App" onSubmit={this.handleRebase}>
                 <header className="navbar">
-                    <button className={rebaseBtnClass} type="submit">
-                        Rebase selected ({this.state.selectedCount})
+                    <button className={rebaseBtnClass} type="submit" title="Rebase selected">
+                        <span className={this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }></span>
+                        <span className="count">{this.state.selectedCount}</span>
                     </button>
-                    <button className="pure-button" onClick={this.handleRefresh}>
-                        Refresh
+                    <button className="pure-button" onClick={this.handleRefresh} title="Refresh">
+                        <span className="icon-loop"></span>
                     </button>
-                    <FolderPicker path={this.state.path} onSelect={this.handlePathUpdate}>
-                        Select visual diff folder
+                    <FolderPicker path={this.state.path} onSelect={this.handlePathUpdate} title="Select visual diff folder">
+                        <span className="icon-folder"></span>
                     </FolderPicker>
                 </header>
                 <FileList files={this.state.list} path={this.state.path} onChange={this.updateSelectedCount} />

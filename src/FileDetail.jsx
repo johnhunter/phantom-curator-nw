@@ -29,19 +29,19 @@ module.exports = React.createClass({
         return (
             <div className="c-FileDetail">
                 <nav className="navbar">
-                    <button className="pure-button pure-button-primary" onClick={this.props.onSelect}>
-                        {isSelected ? 'deselect':'select'}
+                    <button className="pure-button pure-button-primary" onClick={this.props.onSelect} title={isSelected ? 'deselect':'select'}>
+                        <span className={isSelected ? 'icon-checkmark':'icon-checkmark2'}></span>
                     </button>
-                    <button className="pure-button" onClick={this.handleOpen}>
-                        open folder
+                    <button className="pure-button" onClick={this.handleOpen} title="open folder">
+                        <span className="icon-folder-open"></span>
                     </button>
                     <label className="with-inline">
                         ref
                         <input type="range" defaultValue={this.state.opacity} onChange={this.swapImage} />
                         diff
                     </label>
-                    <button className="pure-button pull-right" onClick={this.props.onClose}>
-                        close
+                    <button className="pure-button pull-right" onClick={this.props.onClose} title="close">
+                        <span className="icon-close"></span>
                     </button>
                 </nav>
                 <div className={'visuals ' + (isSelected? 'is-selected':'')}>

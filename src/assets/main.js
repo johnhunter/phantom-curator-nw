@@ -47,6 +47,10 @@ module.exports = React.createClass({
         }
         return false;
     },
+    handleRefresh: function(e){
+        this.getInitialState();
+        return false;
+    },
     handlePathUpdate: function(path){
         storage.setItem('diffPath', path);
         this.getFileList(path);
@@ -63,11 +67,15 @@ module.exports = React.createClass({
         return (
             React.DOM.form( {className:"c-App", onSubmit:this.handleRebase}, 
                 React.DOM.header( {className:"navbar"}, 
-                    React.DOM.button( {className:rebaseBtnClass, type:"submit"}, 
-                        " Rebase selected (",this.state.selectedCount,") "
+                    React.DOM.button( {className:rebaseBtnClass, type:"submit", title:"Rebase selected"}, 
+                        React.DOM.span( {className:this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }),
+                        React.DOM.span( {className:"count"}, this.state.selectedCount)
                     ),
-                    FolderPicker( {path:this.state.path, onSelect:this.handlePathUpdate}, 
-                        " Select visual diff folder "
+                    React.DOM.button( {className:"pure-button", onClick:this.handleRefresh, title:"Refresh"}, 
+                        React.DOM.span( {className:"icon-loop"})
+                    ),
+                    FolderPicker( {path:this.state.path, onSelect:this.handlePathUpdate, title:"Select visual diff folder"}, 
+                        React.DOM.span( {className:"icon-folder"})
                     )
                 ),
                 FileList( {files:this.state.list, path:this.state.path, onChange:this.updateSelectedCount} )
@@ -75,6 +83,7 @@ module.exports = React.createClass({
         );
     }
 });
+
 },{"./FileList.jsx":5,"./FolderPicker.jsx":6}],2:[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -107,19 +116,19 @@ module.exports = React.createClass({
         return (
             React.DOM.div( {className:"c-FileDetail"}, 
                 React.DOM.nav( {className:"navbar"}, 
-                    React.DOM.button( {className:"pure-button pure-button-primary", onClick:this.props.onSelect}, 
-                        isSelected ? 'deselect':'select'
+                    React.DOM.button( {className:"pure-button pure-button-primary", onClick:this.props.onSelect, title:isSelected ? 'deselect':'select'}, 
+                        React.DOM.span( {className:isSelected ? 'icon-checkmark':'icon-checkmark2'})
                     ),
-                    React.DOM.button( {className:"pure-button", onClick:this.handleOpen}, 
-                        " open folder "
+                    React.DOM.button( {className:"pure-button", onClick:this.handleOpen, title:"open folder"}, 
+                        React.DOM.span( {className:"icon-folder-open"})
                     ),
                     React.DOM.label( {className:"with-inline"}, 
                         " ref ",
                         React.DOM.input( {type:"range", defaultValue:this.state.opacity, onChange:this.swapImage} ),
                         " diff "
                     ),
-                    React.DOM.button( {className:"pure-button pull-right", onClick:this.props.onClose}, 
-                        " close "
+                    React.DOM.button( {className:"pure-button pull-right", onClick:this.props.onClose, title:"close"}, 
+                        React.DOM.span( {className:"icon-close"})
                     )
                 ),
                 React.DOM.div( {className:'visuals ' + (isSelected? 'is-selected':'')}, 
@@ -130,6 +139,7 @@ module.exports = React.createClass({
         );
     }
 });
+
 },{"./FileImage.jsx":3}],3:[function(require,module,exports){
 /** @jsx React.DOM */
 
