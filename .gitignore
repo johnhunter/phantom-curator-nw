@@ -5,3 +5,4 @@ node_modules/
 
 # keep the built apps out of the repo until we can figure out where to keep the installers
 webkitbuilds/
+*.sublime-workspace

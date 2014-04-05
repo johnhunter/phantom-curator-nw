@@ -1,33 +1,36 @@
 {
-	"build_systems":
-    [
-        {
-            "cmd":
-            [
-                "cmd.exe",
-                "/c",
-                "grunt",
-                "--no-color"
-            ],
-            "name": "Build node-webkit",
-            "working_dir": "${project_path}"
-        }
-    ],
-    "folders":
-	[
-		{
-			"path": "./"
-		}
-	],
-    "settings":
-    {
-        "binary_file_patterns":
-        [
-            ".pak",
-            ".app"
-        ],
-        "tab_size": 4,
-        "translate_tabs_to_spaces": true,
-        "use_tab_stops": true
-    }
+	"build_systems": [{
+		"name": "phantom-curator: build",
+		"osx": {
+			"cmd": [
+				"grunt",
+				"build",
+				"--no-color"
+			],
+			"path": "/usr/local/share/npm/bin:/usr/local/bin:/opt/local/bin"
+		},
+		"windows": {
+			"cmd": [
+				"cmd.exe",
+				"grunt",
+				"build",
+				"--no-color"
+			]
+		},
+		"working_dir": "${project_path}"
+	}],
+	"build_system": "phantom-curator: build",
+	"folders": [{
+		"follow_symlinks": true,
+		"path": "."
+	}],
+	"settings": {
+		"binary_file_patterns": [
+			".pak",
+			".app"
+		],
+		"tab_size": 4,
+		"translate_tabs_to_spaces": true,
+		"use_tab_stops": true
+	}
 }
