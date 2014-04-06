@@ -3,15 +3,15 @@
 var path = require('path');
 var matchdep = require("matchdep");
 
-module.exports = function(grunt){
+module.exports = function(grunt) {
     // autoload dependencies
     matchdep.filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
 
-    grunt.registerTask('default', ['prepare','build','package']);
+    grunt.registerTask('default', ['prepare', 'build', 'package']);
     grunt.registerTask('prepare', ['uglify:libs']);
-    grunt.registerTask('build', ['browserify','nodewebkit']);
-    grunt.registerTask('package', ['compress:winapp','compress:macapp']);
+    grunt.registerTask('build', ['sass', 'browserify', 'nodewebkit']);
+    grunt.registerTask('package', ['compress:winapp', 'compress:macapp']);
 
     /*
     TODO: create a build folder so only built resources are included in the app
@@ -23,25 +23,34 @@ module.exports = function(grunt){
         pkg: grunt.file.readJSON('package.json'),
 
         paths: {
-            src         : './src/',
-            assets      : './src/assets/',
-            libs        : './src/libs/',
-            build_dir   : './webkitbuilds',
-            release_dir : './webkitbuilds/releases/<%= pkg.name %>/'
+            src: './src/',
+            assets: './src/assets/',
+            libs: './src/libs/',
+            build_dir: './webkitbuilds',
+            release_dir: './webkitbuilds/releases/<%= pkg.name %>/'
         },
 
         uglify: {
             libs: {
-                files: {'<%=paths.assets%>libs.js':
-                [
-                    '<%=paths.libs%>jquery-2.1.0.js',
-                    //'<%=paths.libs%>react.js'
-                    '<%=paths.libs%>react-with-addons.js'
-                ]}
+                files: {
+                    '<%=paths.assets%>libs.js': [
+                        '<%=paths.libs%>jquery-2.1.0.js',
+                        //'<%=paths.libs%>react.js'
+                        '<%=paths.libs%>react-with-addons.js'
+                    ]
+                }
             },
             options: {
                 mangle: false,
                 beautify: true
+            }
+        },
+
+        sass: {
+            app: {
+                files: {
+                    '<%=paths.assets%>styles.css': '<%=paths.src%>scss/styles.scss'
+                }
             }
         },
 
@@ -83,7 +92,9 @@ module.exports = function(grunt){
 
         compress: {
             winapp: {
-                options: { archive: '<%= paths.release_dir %><%= pkg.name %>-win.zip' },
+                options: {
+                    archive: '<%= paths.release_dir %><%= pkg.name %>-win.zip'
+                },
                 files: [{
                     expand: true,
                     cwd: '<%= paths.release_dir %>win/<%= pkg.name %>',
@@ -92,7 +103,9 @@ module.exports = function(grunt){
                 }]
             },
             macapp: {
-                options: { archive: '<%= paths.release_dir %><%= pkg.name %>-mac.zip' },
+                options: {
+                    archive: '<%= paths.release_dir %><%= pkg.name %>-mac.zip'
+                },
                 files: [{
                     expand: true,
                     cwd: '<%= paths.release_dir %>mac',
