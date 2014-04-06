@@ -2,15 +2,16 @@
 
 module.exports = React.createClass({
     handleChange: function(e){
-        e.preventDefault();
+        var button = e.target;
         var self = this;
         var picker = this.refs.picker.getDOMNode();
 
         picker.files.append(new File(this.props.path, ''));
-        $(picker).click().one('change', function(e){
+        $(picker).click().one('change', function(){
             if (this.value) {
                 self.props.onSelect(this.value);
             }
+            button.blur();
         });
     },
     componentDidMount: function(){

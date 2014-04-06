@@ -57,6 +57,12 @@ button .count {
     margin-left: .3em;
 }
 
+.icon-checkmark + .icon-checkmark,
+.icon-checkmark2 + .icon-checkmark2 {
+    margin-left: -9px;
+    opacity: .5;
+}
+
 .diff-path {
     font-family: monospace,serif;
     white-space: pre-wrap;

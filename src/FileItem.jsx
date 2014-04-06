@@ -9,6 +9,14 @@ module.exports = React.createClass({
             showingDetail: false
         };
     },
+    componentWillReceiveProps: function(nextProps) {
+        var selectedState = nextProps.selectedState;
+        if (selectedState !== 'undefined') {
+            this.setState({
+                selected: selectedState === 'all'
+            });
+        }
+    },
     handleSelect: function(e){
         var field = e.target
         this.setSelected(e.target.checked);

@@ -6,7 +6,12 @@ module.exports = React.createClass({
     render: function(){
         var self = this;
         var fileItems = this.props.files.map(function (filepath) {
-            return <FileItem filepath={filepath} root={normalisePath(self.props.path)} onSelect={self.props.onChange} />;
+            return <FileItem
+                key={filepath}
+                filepath={filepath}
+                root={normalisePath(self.props.path)}
+                onSelect={self.props.onChange}
+                selectedState={self.props.selectedState} />;
         });
 
         if (!fileItems.length) {

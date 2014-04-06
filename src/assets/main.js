@@ -13,6 +13,7 @@ module.exports = React.createClass({
         return {
             path: path,
             list: [],
+            selectedState: 'undefined',
             selectedCount: 0
         };
     },
@@ -49,16 +50,35 @@ module.exports = React.createClass({
     },
     handleRefresh: function(e){
         this.getInitialState();
+        e.target.blur();
         return false;
     },
     handlePathUpdate: function(path){
         storage.setItem('diffPath', path);
         this.getFileList(path);
-
     },
     updateSelectedCount: function(delta){
         var updatedCount = this.state.selectedCount + delta;
-        this.setState({ selectedCount: updatedCount });
+        this.setState({
+            selectedCount: updatedCount,
+            selectedState: 'undefined'
+        });
+    },
+    selectAll: function(e){
+        this.setState({
+            selectedState: 'all',
+            selectedCount: this.state.list.length
+        });
+        e.target.blur();
+        return false;
+    },
+    selectNone: function(e){
+        this.setState({
+            selectedState: 'none',
+            selectedCount: 0
+        });
+        e.target.blur();
+        return false;
     },
     render: function() {
         var rebaseBtnClass = 'pure-button pure-button-primary';
@@ -71,6 +91,16 @@ module.exports = React.createClass({
                         React.DOM.span( {className:this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }),
                         React.DOM.span( {className:"count"}, this.state.selectedCount)
                     ),
+
+                    React.DOM.button( {className:"pure-button", onClick:this.selectAll, title:"Select all"}, 
+                        React.DOM.span( {className:"icon-checkmark"}),
+                        React.DOM.span( {className:"icon-checkmark"})
+                    ),
+                    React.DOM.button( {className:"pure-button", onClick:this.selectNone, title:"Select none"}, 
+                        React.DOM.span( {className:"icon-checkmark2"}),
+                        React.DOM.span( {className:"icon-checkmark2"})
+                    ),
+
                     React.DOM.button( {className:"pure-button", onClick:this.handleRefresh, title:"Refresh"}, 
                         React.DOM.span( {className:"icon-loop"})
                     ),
@@ -78,7 +108,7 @@ module.exports = React.createClass({
                         React.DOM.span( {className:"icon-folder"})
                     )
                 ),
-                FileList( {files:this.state.list, path:this.state.path, onChange:this.updateSelectedCount} )
+                FileList( {files:this.state.list, path:this.state.path, onChange:this.updateSelectedCount, selectedState:this.state.selectedState} )
             )
         );
     }
@@ -169,6 +199,14 @@ module.exports = React.createClass({
             showingDetail: false
         };
     },
+    componentWillReceiveProps: function(nextProps) {
+        var selectedState = nextProps.selectedState;
+        if (selectedState !== 'undefined') {
+            this.setState({
+                selected: selectedState === 'all'
+            });
+        }
+    },
     handleSelect: function(e){
         var field = e.target
         this.setSelected(e.target.checked);
@@ -206,6 +244,7 @@ module.exports = React.createClass({
         );
     }
 });
+
 },{"./FileDetail.jsx":2}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -215,7 +254,12 @@ module.exports = React.createClass({
     render: function(){
         var self = this;
         var fileItems = this.props.files.map(function (filepath) {
-            return FileItem( {filepath:filepath, root:normalisePath(self.props.path), onSelect:self.props.onChange} );
+            return FileItem(
+                {key:filepath,
+                filepath:filepath,
+                root:normalisePath(self.props.path),
+                onSelect:self.props.onChange,
+                selectedState:self.props.selectedState} );
         });
 
         if (!fileItems.length) {
@@ -233,20 +277,22 @@ module.exports = React.createClass({
 function normalisePath(path){
     return String(path).replace(/\\/g, '/');
 }
+
 },{"./FileItem.jsx":4}],6:[function(require,module,exports){
 /** @jsx React.DOM */
 
 module.exports = React.createClass({
     handleChange: function(e){
-        e.preventDefault();
+        var button = e.target;
         var self = this;
         var picker = this.refs.picker.getDOMNode();
 
         picker.files.append(new File(this.props.path, ''));
-        $(picker).click().one('change', function(e){
+        $(picker).click().one('change', function(){
             if (this.value) {
                 self.props.onSelect(this.value);
             }
+            button.blur();
         });
     },
     componentDidMount: function(){
@@ -266,6 +312,7 @@ module.exports = React.createClass({
         );
     }
 });
+
 },{}],7:[function(require,module,exports){
 /** @jsx React.DOM */
 

@@ -12,6 +12,7 @@ module.exports = React.createClass({
         return {
             path: path,
             list: [],
+            selectedState: 'undefined',
             selectedCount: 0
         };
     },
@@ -48,16 +49,35 @@ module.exports = React.createClass({
     },
     handleRefresh: function(e){
         this.getInitialState();
+        e.target.blur();
         return false;
     },
     handlePathUpdate: function(path){
         storage.setItem('diffPath', path);
         this.getFileList(path);
-
     },
     updateSelectedCount: function(delta){
         var updatedCount = this.state.selectedCount + delta;
-        this.setState({ selectedCount: updatedCount });
+        this.setState({
+            selectedCount: updatedCount,
+            selectedState: 'undefined'
+        });
+    },
+    selectAll: function(e){
+        this.setState({
+            selectedState: 'all',
+            selectedCount: this.state.list.length
+        });
+        e.target.blur();
+        return false;
+    },
+    selectNone: function(e){
+        this.setState({
+            selectedState: 'none',
+            selectedCount: 0
+        });
+        e.target.blur();
+        return false;
     },
     render: function() {
         var rebaseBtnClass = 'pure-button pure-button-primary';
@@ -70,6 +90,16 @@ module.exports = React.createClass({
                         <span className={this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }></span>
                         <span className="count">{this.state.selectedCount}</span>
                     </button>
+
+                    <button className="pure-button" onClick={this.selectAll} title="Select all">
+                        <span className="icon-checkmark"></span>
+                        <span className="icon-checkmark"></span>
+                    </button>
+                    <button className="pure-button" onClick={this.selectNone} title="Select none">
+                        <span className="icon-checkmark2"></span>
+                        <span className="icon-checkmark2"></span>
+                    </button>
+
                     <button className="pure-button" onClick={this.handleRefresh} title="Refresh">
                         <span className="icon-loop"></span>
                     </button>
@@ -77,7 +107,7 @@ module.exports = React.createClass({
                         <span className="icon-folder"></span>
                     </FolderPicker>
                 </header>
-                <FileList files={this.state.list} path={this.state.path} onChange={this.updateSelectedCount} />
+                <FileList files={this.state.list} path={this.state.path} onChange={this.updateSelectedCount} selectedState={this.state.selectedState} />
             </form>
         );
     }
