@@ -13,6 +13,7 @@ module.exports = React.createClass({
             }
             button.blur();
         });
+        return false;
     },
     componentDidMount: function(){
         // workaround for JSX not liking nodeWebkit attrs

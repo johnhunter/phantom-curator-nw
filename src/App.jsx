@@ -63,25 +63,24 @@ module.exports = React.createClass({
             selectedState: 'undefined'
         });
     },
-    selectAll: function(e){
-        this.setState({
-            selectedState: 'all',
-            selectedCount: this.state.list.length
-        });
-        e.target.blur();
-        return false;
-    },
-    selectNone: function(e){
-        this.setState({
-            selectedState: 'none',
-            selectedCount: 0
-        });
+    toggleAll: function(e){
+        var update = {};
+        if (this.state.selectedState === 'all') {
+            update.selectedState = 'none';
+            update.selectedCount = 0;
+        }
+        else {
+            update.selectedState = 'all';
+            update.selectedCount = this.state.list.length;
+        }
+        this.setState(update);
         e.target.blur();
         return false;
     },
     render: function() {
         var rebaseBtnClass = 'pure-button pure-button-primary';
         rebaseBtnClass += this.state.selectedCount ? '' : ' pure-button-disabled';
+        var isSelectedAll = this.state.selectedState === 'all';
 
         return (
             <form className="c-App" onSubmit={this.handleRebase}>
@@ -90,16 +89,10 @@ module.exports = React.createClass({
                         <span className={this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }></span>
                         <span className="count">{this.state.selectedCount}</span>
                     </button>
-
-                    <button className="pure-button" onClick={this.selectAll} title="Select all">
-                        <span className="icon-checkmark"></span>
-                        <span className="icon-checkmark"></span>
+                    <button className="pure-button" onClick={this.toggleAll} title="Select all / none">
+                        <span className={isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'}></span>
+                        <span className={isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'}></span>
                     </button>
-                    <button className="pure-button" onClick={this.selectNone} title="Select none">
-                        <span className="icon-checkmark2"></span>
-                        <span className="icon-checkmark2"></span>
-                    </button>
-
                     <button className="pure-button" onClick={this.handleRefresh} title="Refresh">
                         <span className="icon-loop"></span>
                     </button>
@@ -107,6 +100,7 @@ module.exports = React.createClass({
                         <span className="icon-folder"></span>
                     </FolderPicker>
                 </header>
+
                 <FileList files={this.state.list} path={this.state.path} onChange={this.updateSelectedCount} selectedState={this.state.selectedState} />
             </form>
         );

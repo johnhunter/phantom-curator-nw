@@ -64,25 +64,24 @@ module.exports = React.createClass({
             selectedState: 'undefined'
         });
     },
-    selectAll: function(e){
-        this.setState({
-            selectedState: 'all',
-            selectedCount: this.state.list.length
-        });
-        e.target.blur();
-        return false;
-    },
-    selectNone: function(e){
-        this.setState({
-            selectedState: 'none',
-            selectedCount: 0
-        });
+    toggleAll: function(e){
+        var update = {};
+        if (this.state.selectedState === 'all') {
+            update.selectedState = 'none';
+            update.selectedCount = 0;
+        }
+        else {
+            update.selectedState = 'all';
+            update.selectedCount = this.state.list.length;
+        }
+        this.setState(update);
         e.target.blur();
         return false;
     },
     render: function() {
         var rebaseBtnClass = 'pure-button pure-button-primary';
         rebaseBtnClass += this.state.selectedCount ? '' : ' pure-button-disabled';
+        var isSelectedAll = this.state.selectedState === 'all';
 
         return (
             React.DOM.form( {className:"c-App", onSubmit:this.handleRebase}, 
@@ -91,16 +90,10 @@ module.exports = React.createClass({
                         React.DOM.span( {className:this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }),
                         React.DOM.span( {className:"count"}, this.state.selectedCount)
                     ),
-
-                    React.DOM.button( {className:"pure-button", onClick:this.selectAll, title:"Select all"}, 
-                        React.DOM.span( {className:"icon-checkmark"}),
-                        React.DOM.span( {className:"icon-checkmark"})
+                    React.DOM.button( {className:"pure-button", onClick:this.toggleAll, title:"Select all / none"}, 
+                        React.DOM.span( {className:isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'}),
+                        React.DOM.span( {className:isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'})
                     ),
-                    React.DOM.button( {className:"pure-button", onClick:this.selectNone, title:"Select none"}, 
-                        React.DOM.span( {className:"icon-checkmark2"}),
-                        React.DOM.span( {className:"icon-checkmark2"})
-                    ),
-
                     React.DOM.button( {className:"pure-button", onClick:this.handleRefresh, title:"Refresh"}, 
                         React.DOM.span( {className:"icon-loop"})
                     ),
@@ -108,6 +101,7 @@ module.exports = React.createClass({
                         React.DOM.span( {className:"icon-folder"})
                     )
                 ),
+
                 FileList( {files:this.state.list, path:this.state.path, onChange:this.updateSelectedCount, selectedState:this.state.selectedState} )
             )
         );
@@ -162,7 +156,7 @@ module.exports = React.createClass({
                     )
                 ),
                 React.DOM.div( {className:'visuals ' + (isSelected? 'is-selected':'')}, 
-                    FileImage( {title:"Reference image", src:path + '.png', opacity:"100"} ),
+                    FileImage( {title:"Reference image", src:path + '.png', opacity:1 - this.state.opacity} ),
                     FileImage( {title:"Diff image", src:path + '.diff.png', opacity:this.state.opacity} )
                 )
             )
@@ -294,6 +288,7 @@ module.exports = React.createClass({
             }
             button.blur();
         });
+        return false;
     },
     componentDidMount: function(){
         // workaround for JSX not liking nodeWebkit attrs

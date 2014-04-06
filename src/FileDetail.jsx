@@ -45,7 +45,7 @@ module.exports = React.createClass({
                     </button>
                 </nav>
                 <div className={'visuals ' + (isSelected? 'is-selected':'')}>
-                    <FileImage title="Reference image" src={path + '.png'} opacity="100" />
+                    <FileImage title="Reference image" src={path + '.png'} opacity={1 - this.state.opacity} />
                     <FileImage title="Diff image" src={path + '.diff.png'} opacity={this.state.opacity} />
                 </div>
             </div>
