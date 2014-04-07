@@ -5,17 +5,25 @@
 <script>
 /* jshint browser:true, node:true */
 
-process.on("uncaughtException", function(e) {
-    guiWin.showDevTools();
-    console.log(e);
-});
 
 var gui       = require('nw.gui');
 var visdiffer = require('./visdiffer.js');
 var pathSep   = require('path').sep;
 
-
 var guiWin = gui.Window.get();
+process.on("uncaughtException", function(e) {
+    if (window.confirm('Oh Dear - an error occured. Select Ok to quit and try again. If you want to investigate the problem select cancel.')) {
+        // shutdown
+        gui.App.quit();
+    }
+    else {
+        guiWin.showDevTools();
+    }
+    console.log(e);
+});
+
+
+
 guiWin.title = gui.App.manifest.name;
 guiWin.show();
 
