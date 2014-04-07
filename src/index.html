@@ -5,6 +5,11 @@
 <script>
 /* jshint browser:true, node:true */
 
+process.on("uncaughtException", function(e) {
+    guiWin.showDevTools();
+    console.log(e);
+});
+
 var gui       = require('nw.gui');
 var visdiffer = require('./visdiffer.js');
 var pathSep   = require('path').sep;
