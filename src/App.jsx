@@ -89,7 +89,7 @@ module.exports = React.createClass({
                         <span className={this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }></span>
                         <span className="count">{this.state.selectedCount}</span>
                     </button>
-                    <button className="pure-button" onClick={this.toggleAll} title="Select all / none">
+                    <button className="pure-button" onClick={this.toggleAll} title={isSelectedAll ? 'Select all' : 'Select none'}>
                         <span className={isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'}></span>
                         <span className={isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'}></span>
                     </button>

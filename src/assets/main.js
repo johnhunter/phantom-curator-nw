@@ -90,7 +90,7 @@ module.exports = React.createClass({
                         React.DOM.span( {className:this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }),
                         React.DOM.span( {className:"count"}, this.state.selectedCount)
                     ),
-                    React.DOM.button( {className:"pure-button", onClick:this.toggleAll, title:"Select all / none"}, 
+                    React.DOM.button( {className:"pure-button", onClick:this.toggleAll, title:isSelectedAll ? 'Select all' : 'Select none'}, 
                         React.DOM.span( {className:isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'}),
                         React.DOM.span( {className:isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'})
                     ),
