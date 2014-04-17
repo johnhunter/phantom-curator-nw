@@ -5,8 +5,7 @@ var FileDetail = require('./FileDetail.jsx');
 module.exports = React.createClass({
     getInitialState: function() {
         return {
-            selected: false,
-            showingDetail: false
+            selected: false
         };
     },
     componentWillReceiveProps: function(nextProps) {
@@ -30,11 +29,15 @@ module.exports = React.createClass({
         this.props.onSelect(value ? 1 : -1);
     },
     toggleDetail: function(e){
-        this.setState({ showingDetail: !this.state.showingDetail });
+        if (this.props.isShowingDetail) {
+            this.props.onShowDetail(-1);
+            return false;
+        }
+        this.props.onShowDetail(this.props.index);
         return false;
     },
     render: function() {
-        var relpath = this.props.filepath;
+        var relpath = this.props.key;
         var abspath = this.props.root + '/' + relpath;
         var failImg = abspath + '.fail.png';
 
@@ -49,7 +52,7 @@ module.exports = React.createClass({
                 </a>
                 <FileDetail path={abspath}
                     selected={this.state.selected} onSelect={this.toggleSelect}
-                    active={this.state.showingDetail} onClose={this.toggleDetail} />
+                    active={this.props.isShowingDetail} onClose={this.toggleDetail} />
             </li>
         );
     }

@@ -189,8 +189,7 @@ var FileDetail = require('./FileDetail.jsx');
 module.exports = React.createClass({
     getInitialState: function() {
         return {
-            selected: false,
-            showingDetail: false
+            selected: false
         };
     },
     componentWillReceiveProps: function(nextProps) {
@@ -214,11 +213,15 @@ module.exports = React.createClass({
         this.props.onSelect(value ? 1 : -1);
     },
     toggleDetail: function(e){
-        this.setState({ showingDetail: !this.state.showingDetail });
+        if (this.props.isShowingDetail) {
+            this.props.onShowDetail(-1);
+            return false;
+        }
+        this.props.onShowDetail(this.props.index);
         return false;
     },
     render: function() {
-        var relpath = this.props.filepath;
+        var relpath = this.props.key;
         var abspath = this.props.root + '/' + relpath;
         var failImg = abspath + '.fail.png';
 
@@ -233,7 +236,7 @@ module.exports = React.createClass({
                 ),
                 FileDetail( {path:abspath,
                     selected:this.state.selected, onSelect:this.toggleSelect,
-                    active:this.state.showingDetail, onClose:this.toggleDetail} )
+                    active:this.props.isShowingDetail, onClose:this.toggleDetail} )
             )
         );
     }
@@ -245,14 +248,34 @@ module.exports = React.createClass({
 var FileItem = require('./FileItem.jsx');
 
 module.exports = React.createClass({
+    getInitialState: function() {
+        return {
+            showingDetailIndex: -1
+        };
+    },
+
+    showItemDetail: function(index){
+        var currIndex = this.state.showingDetailIndex
+        if (index === 'next') {
+            index = Math.min(currIndex + 1, this.props.files.length - 1);
+        }
+        if (index === 'prev') {
+            index = Math.max(currIndex - 1, 0);
+        }
+        this.setState({
+            showingDetailIndex: index
+        });
+    },
     render: function(){
         var self = this;
-        var fileItems = this.props.files.map(function (filepath) {
+        var fileItems = this.props.files.map(function (filepath, i) {
             return FileItem(
                 {key:filepath,
-                filepath:filepath,
+                index:i,
                 root:normalisePath(self.props.path),
                 onSelect:self.props.onChange,
+                onShowDetail:self.showItemDetail,
+                isShowingDetail:i === self.state.showingDetailIndex,
                 selectedState:self.props.selectedState} );
         });
 
