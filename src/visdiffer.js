@@ -31,7 +31,6 @@ visdiffer.rebase = function(rebaseList, done, fail){
     rebaseFiles(rebaseList);
 
     done(rebaseList);
-    // FIXME: we're not really checking the file is deleted
     // TODO: handle fails - also use promises?
 };
 
@@ -99,7 +98,7 @@ function readDir(start, callback) {
         }
         function processFiles (files) {
             found.files = found.files.concat(files);
-            if(++processed == total) {
+            if(++processed === total) {
                 callback(null, found);
             }
         }
@@ -107,7 +106,7 @@ function readDir(start, callback) {
         if(stat.isDirectory()) {
             fs.readdir(start, function (err, files) {
                 total = files.length;
-                for(var x=0, l=files.length; x<l; x++) {
+                for(var x = 0, l = files.length; x < l; x++) {
                     isDir(path.join(start, files[x]));
                 }
                 if (total === 0) {

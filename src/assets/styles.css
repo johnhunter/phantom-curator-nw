@@ -1010,9 +1010,6 @@ header {
   background-color: #0078e7;
   color: #fff; }
 
-.is-selected img {
-  opacity: .5; }
-
 .navbar {
   padding: 20px;
   background-color: #fafafa;

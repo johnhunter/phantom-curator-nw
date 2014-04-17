@@ -82,6 +82,7 @@ module.exports = React.createClass({
         var rebaseBtnClass = 'pure-button pure-button-primary';
         rebaseBtnClass += this.state.selectedCount ? '' : ' pure-button-disabled';
         var isSelectedAll = this.state.selectedState === 'all';
+        var selectAllIcon = isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark';
 
         return (
             React.DOM.form( {className:"c-App", onSubmit:this.handleRebase}, 
@@ -91,8 +92,8 @@ module.exports = React.createClass({
                         React.DOM.span( {className:"count"}, this.state.selectedCount)
                     ),
                     React.DOM.button( {className:"pure-button", onClick:this.toggleAll, title:isSelectedAll ? 'Select all' : 'Select none'}, 
-                        React.DOM.span( {className:isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'}),
-                        React.DOM.span( {className:isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark'})
+                        React.DOM.span( {className:selectAllIcon}),
+                        React.DOM.span( {className:selectAllIcon})
                     ),
                     React.DOM.button( {className:"pure-button", onClick:this.handleRefresh, title:"Refresh"}, 
                         React.DOM.span( {className:"icon-loop"})
@@ -102,7 +103,11 @@ module.exports = React.createClass({
                     )
                 ),
 
-                FileList( {files:this.state.list, path:this.state.path, onChange:this.updateSelectedCount, selectedState:this.state.selectedState} )
+                FileList(
+                    {files:this.state.list,
+                    path:this.state.path,
+                    onChange:this.updateSelectedCount,
+                    selectedState:this.state.selectedState} )
             )
         );
     }

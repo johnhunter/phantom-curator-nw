@@ -11,18 +11,16 @@ var visdiffer = require('./visdiffer.js');
 var pathSep   = require('path').sep;
 
 var guiWin = gui.Window.get();
+
+// allow user to recover from node exceptions
 process.on("uncaughtException", function(e) {
     if (window.confirm('Oh Dear - an error occured. Select Ok to quit and try again. If you want to investigate the problem select cancel.')) {
-        // shutdown
         gui.App.quit();
+        return;
     }
-    else {
-        guiWin.showDevTools();
-    }
+    guiWin.showDevTools();
     console.log(e);
 });
-
-
 
 guiWin.title = gui.App.manifest.name;
 guiWin.show();
@@ -40,10 +38,8 @@ document.addEventListener('keydown', function(e){
 </script>
     <title></title>
     <link rel="stylesheet" href="assets/styles.css">
-
 </head>
 <body>
-
     <div id="content"></div>
 
     <script src="assets/libs.js"></script>
