@@ -84,6 +84,8 @@ module.exports = React.createClass({
         var isSelectedAll = this.state.selectedState === 'all';
         var selectAllIcon = isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark';
 
+        gui.Window.get().title = "Phantom curator: " + this.state.path;
+
         return (
             React.DOM.form( {className:"c-App", onSubmit:this.handleRebase}, 
                 React.DOM.header( {className:"navbar"}, 
@@ -180,12 +182,12 @@ module.exports = React.createClass({
         };
         return (
             React.DOM.div( {className:"visual", style:style}, 
-                React.DOM.p( {className:"caption"}, this.props.title),
-                React.DOM.img( {src:this.props.src} )
+                React.DOM.img( {src:this.props.src, alt:this.props.title} )
             )
         );
     }
 });
+
 },{}],4:[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -234,7 +236,7 @@ module.exports = React.createClass({
             React.DOM.li( {className:"c-FileItem"}, 
                 React.DOM.label( {className:"with-pill"}, 
                     React.DOM.input( {type:"checkbox", name:"diff", value:relpath, checked:this.state.selected, onChange:this.handleSelect} ),
-                    " Select "
+                    relpath
                 ),
                 React.DOM.a( {className:"with-block", href:"#view", title:relpath, onClick:this.toggleDetail}, 
                     React.DOM.img( {src:failImg} )
@@ -323,6 +325,15 @@ module.exports = React.createClass({
         var picker = this.refs.picker.getDOMNode();
         picker.setAttribute('nwdirectory', 'nwdirectory');
     },
+    truncatePath: function(path){
+        path = path || this.props.path;
+        var tokens = path.split(pathSep);
+        if (tokens.length > 2) {
+            path = tokens.slice(-2).join(pathSep);
+            path = '…' + pathSep + path;
+        }
+        return path;
+    },
     render: function() {
         return (
             React.DOM.span( {className:"c-FolderPicker"}, 
@@ -330,7 +341,7 @@ module.exports = React.createClass({
                    this.props.children
                 ),
                 React.DOM.input( {style:{display:'none'}, type:"file", ref:"picker"} ),
-                React.DOM.span( {className:"diff-path"}, this.props.path)
+                React.DOM.span( {className:"diff-path"}, this.truncatePath())
             )
         );
     }

@@ -8,8 +8,7 @@ module.exports = React.createClass({
         };
         return (
             <div className="visual" style={style}>
-                <p className="caption">{this.props.title}</p>
-                <img src={this.props.src} />
+                <img src={this.props.src} alt={this.props.title} />
             </div>
         );
     }

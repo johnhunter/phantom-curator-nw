@@ -83,6 +83,8 @@ module.exports = React.createClass({
         var isSelectedAll = this.state.selectedState === 'all';
         var selectAllIcon = isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark';
 
+        gui.Window.get().title = "Phantom curator: " + this.state.path;
+
         return (
             <form className="c-App" onSubmit={this.handleRebase}>
                 <header className="navbar">

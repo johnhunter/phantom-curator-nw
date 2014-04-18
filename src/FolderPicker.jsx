@@ -20,6 +20,15 @@ module.exports = React.createClass({
         var picker = this.refs.picker.getDOMNode();
         picker.setAttribute('nwdirectory', 'nwdirectory');
     },
+    truncatePath: function(path){
+        path = path || this.props.path;
+        var tokens = path.split(pathSep);
+        if (tokens.length > 2) {
+            path = tokens.slice(-2).join(pathSep);
+            path = '…' + pathSep + path;
+        }
+        return path;
+    },
     render: function() {
         return (
             <span className="c-FolderPicker">
@@ -27,7 +36,7 @@ module.exports = React.createClass({
                    {this.props.children}
                 </button>
                 <input style={{display:'none'}} type="file" ref="picker" />
-                <span className="diff-path">{this.props.path}</span>
+                <span className="diff-path">{this.truncatePath()}</span>
             </span>
         );
     }

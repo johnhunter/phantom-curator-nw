@@ -45,7 +45,7 @@ module.exports = React.createClass({
             <li className="c-FileItem">
                 <label className="with-pill">
                     <input type="checkbox" name="diff" value={relpath} checked={this.state.selected} onChange={this.handleSelect} />
-                    Select
+                    {relpath}
                 </label>
                 <a className="with-block" href="#view" title={relpath} onClick={this.toggleDetail}>
                     <img src={failImg} />

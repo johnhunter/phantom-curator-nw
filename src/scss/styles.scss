@@ -2,11 +2,18 @@
 @import "pure-min";
 
 
+$fontFamily: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
 body {
     color: #555;
-    font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+body, button, input, select, textarea,
+.pure-g [class *= "pure-u"],
+.pure-g-r [class *= "pure-u"] {
+    font-family: $fontFamily;
+}
 
 header {
     position: fixed;
@@ -32,8 +39,16 @@ header {
     margin: 5px;
     padding: 2px 6px;
     border-radius:2px;
+    white-space: nowrap;
     -webkit-transition: all 500ms;
             transition: all 500ms;
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        width: 90%;
+        float: right;
+    }
 }
 .with-pill:hover {
     background-color: #0078e7;
@@ -91,7 +106,6 @@ button .count {
 .c-FileItem {
     margin: 10px;
     width: 240px;
-    /*height: 240px;*/
 }
 
 .empty-msg {
@@ -143,12 +157,9 @@ button .count {
         max-width: 100%;
         max-height: 100%;
     }
-    .caption {
-        margin: .5em 0;
-    }
     .visuals {
         position: relative;
-        padding: 20px;
+        margin: 10px;
     }
     .visual {
         position: absolute;
