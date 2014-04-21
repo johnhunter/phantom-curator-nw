@@ -260,7 +260,25 @@ module.exports = React.createClass({
             showingDetailIndex: -1
         };
     },
-
+    componentDidMount: function(){
+        $(document).on('keydown', this.handleKeyPress);
+    },
+    compontWillUnmount: function(){
+        $(document).off('keydown');
+    },
+    handleKeyPress: function(e){
+        if (this.state.showingDetailIndex === -1) {
+            return;
+        }
+        switch(e.which) {
+        case 39:
+            this.showItemDetail('next');
+            break;
+        case 37:
+            this.showItemDetail('prev');
+            break;
+        }
+    },
     showItemDetail: function(index){
         var currIndex = this.state.showingDetailIndex
         if (index === 'next') {
