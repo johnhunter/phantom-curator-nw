@@ -1,5 +1,6 @@
 .sublime-workspace
 webkitbuilds/cache
+build/
 node_modules/
 
 

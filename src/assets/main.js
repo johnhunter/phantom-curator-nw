@@ -368,10 +368,11 @@ module.exports = React.createClass({
 },{}],7:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var App = require('./App.jsx');
+var App = require('./components/App.jsx');
 
 React.renderComponent(
     App(null ),
     document.getElementById('content')
 );
-},{"./App.jsx":1}]},{},[7])
+
+},{"./components/App.jsx":1}]},{},[7])

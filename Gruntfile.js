@@ -10,13 +10,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['prepare', 'build', 'package']);
     grunt.registerTask('prepare', ['uglify:libs']);
-    grunt.registerTask('build', ['sass', 'browserify', 'nodewebkit']);
+    grunt.registerTask('build', ['sass', 'browserify', 'clean:build', 'copy:build', 'nodewebkit']);
     grunt.registerTask('package', ['compress:winapp', 'compress:macapp']);
-
-    /*
-    TODO: create a build folder so only built resources are included in the app
-
-    */
 
 
     grunt.initConfig({
@@ -24,25 +19,27 @@ module.exports = function(grunt) {
 
         paths: {
             src: './src/',
+            modules: './src/modules/',
             assets: './src/assets/',
             libs: './src/libs/',
-            build_dir: './webkitbuilds',
-            release_dir: './webkitbuilds/releases/<%= pkg.name %>/'
+            build: './build/',
+            wkBuild: './webkitbuilds',
+            release: './webkitbuilds/releases/<%= pkg.name %>/'
         },
 
         uglify: {
             libs: {
                 files: {
-                    '<%=paths.assets%>libs.js': [
-                        '<%=paths.libs%>jquery-2.1.0.js',
+                    '<%=paths.assets %>libs.js': [
+                        '<%=paths.libs %>jquery-2.1.0.js',
                         //'<%=paths.libs%>react.js'
-                        '<%=paths.libs%>react-with-addons.js'
+                        '<%=paths.libs %>react-with-addons.js'
                     ]
                 }
             },
             options: {
-                mangle: false,
-                beautify: true
+                mangle: false//,
+                //beautify: true
             }
         },
 
@@ -77,38 +74,54 @@ module.exports = function(grunt) {
             }
         },
 
+        clean: {
+            build: ['<%=paths.build %>']
+        },
+
+        copy: {
+            build: {
+                nonull: true,
+                files: [
+                    { src: '<%=paths.src %>/index.html', dest: '<%=paths.build %>/index.html' },
+                    { src: '<%=paths.src %>/nodewebkit-package.json', dest: '<%=paths.build %>/package.json' },
+                    { expand: true, cwd: '<%=paths.modules %>/', src: ['**'], dest: '<%=paths.build %>/modules/' },
+                    { expand: true, cwd: '<%=paths.assets %>/', src: ['**'], dest: '<%=paths.build %>/assets/' }
+                ]
+            }
+        },
+
         nodewebkit: {
             options: {
                 app_name: '<%= pkg.name %>',
                 app_version: '<%= pkg.version %>',
-                build_dir: '<%= paths.build_dir %>',
+                build_dir: '<%= paths.wkBuild %>',
                 mac: true,
                 win: true,
                 linux32: false,
                 linux64: false
             },
-            src: ['<%=paths.src%>**/*']
+            src: ['<%=paths.build %>**/*']
         },
 
         compress: {
             winapp: {
                 options: {
-                    archive: '<%= paths.release_dir %><%= pkg.name %>-win.zip'
+                    archive: '<%= paths.release %><%= pkg.name %>-win.zip'
                 },
                 files: [{
                     expand: true,
-                    cwd: '<%= paths.release_dir %>win/<%= pkg.name %>',
+                    cwd: '<%= paths.release %>win/<%= pkg.name %>',
                     src: ['**'],
                     dest: '.'
                 }]
             },
             macapp: {
                 options: {
-                    archive: '<%= paths.release_dir %><%= pkg.name %>-mac.zip'
+                    archive: '<%= paths.release %><%= pkg.name %>-mac.zip'
                 },
                 files: [{
                     expand: true,
-                    cwd: '<%= paths.release_dir %>mac',
+                    cwd: '<%= paths.release %>mac',
                     src: ['**'],
                     dest: '.'
                 }]
