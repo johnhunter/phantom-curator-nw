@@ -42,7 +42,7 @@ module.exports = React.createClass({
                 return false;
             }
             visdiffer.rebase(rebaseList, function(){
-                self.getFileList(this.state.path);
+                self.getFileList(self.state.path);
             });
         }
         return false;
