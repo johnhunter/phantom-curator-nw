@@ -3,8 +3,6 @@ phantom-curator-nw
 
 A desktop application for managing [PhantomCSS](https://github.com/Huddle/PhantomCSS) visual diffs.
 
-This builds on the original web app [phantom-curator](https://git.niniansolutions.com/John-hunter/phantom-curator) but turns it into a desktop app.
-
 ## Get the app
 
 *zip / dmg files are too big to be hosted in github* - for the moment you need to checkout the repo and build
@@ -38,6 +36,6 @@ There are 3 builds (default runs all of them):
 - `grunt build` - builds the reactjs and makes the node-webkit app (use this to see code changes)
 - `grunt package` - creates the distribution zips / installers
 
-To work on code run `grunt build` and then open the app exe in `webkitbuilds/releases/phantom-curator/<os>/phantom-curator`
+To work on code run `grunt build` and then open the app exe in `webkitbuilds/releases/phantom-curator/<os>/`
 
 Once running you can use *Ctrl-Shift-i* to open the debugging console.
