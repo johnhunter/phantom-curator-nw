@@ -46,6 +46,7 @@ module.exports = function(grunt) {
 
         sass: {
             app: {
+                style: 'expanded',
                 files: {
                     '<%=paths.assets%>styles.css': '<%=paths.src%>scss/styles.scss'
                 }
