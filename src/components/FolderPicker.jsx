@@ -32,11 +32,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <span className="c-FolderPicker">
-                <button className="pure-button" id="folder-select" onClick={this.handleChange}>
+                <a href="#" className="" id="folder-select" title={this.truncatePath()} onClick={this.handleChange}>
                    {this.props.children}
-                </button>
+                </a>
                 <input style={{display:'none'}} type="file" ref="picker" />
-                <span className="diff-path">{this.truncatePath()}</span>
             </span>
         );
     }

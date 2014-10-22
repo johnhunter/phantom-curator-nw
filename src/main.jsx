@@ -4,5 +4,5 @@ var App = require('./components/App.jsx');
 
 React.renderComponent(
     <App />,
-    document.getElementById('content')
+    document.getElementById('layout')
 );

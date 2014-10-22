@@ -41,15 +41,31 @@ module.exports = React.createClass({
         var abspath = this.props.root + '/' + relpath;
         var failImg = abspath + '.fail.png';
 
+        var pathTokens = this.props.key.split('/');
+
+        var visualName = pathTokens.pop();
+        var testName = pathTokens.pop();
+        var sectionName = pathTokens.pop();
+
         return (
-            <li className="c-FileItem">
-                <label className="with-pill">
-                    <input type="checkbox" name="diff" value={relpath} checked={this.state.selected} onChange={this.handleSelect} />
-                    {relpath}
-                </label>
-                <a className="with-block" href="#view" title={relpath} onClick={this.toggleDetail}>
-                    <img src={failImg} />
-                </a>
+            <li className="c-FileItem email-item pure-g">
+
+                <div className="pure-u">
+                    <img className="email-avatar" height="64" width="64" src={failImg} alt={relpath} />
+                </div>
+
+                <div className="pure-u-3-4">
+                    <h4 className="email-subject">
+                        <a href="#view" className="with-block" onClick={this.toggleDetail}>
+                            {visualName}
+                        </a>
+                    </h4>
+                    <label>
+                        <input type="checkbox" name="diff" value={relpath} checked={this.state.selected} onChange={this.handleSelect} />
+                        Select
+                    </label>
+                </div>
+
                 <FileDetail path={abspath}
                     selected={this.state.selected} onSelect={this.toggleSelect}
                     active={this.props.isShowingDetail} onClose={this.toggleDetail} />

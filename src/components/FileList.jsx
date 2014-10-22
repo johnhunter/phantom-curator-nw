@@ -57,7 +57,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <ul className="c-FileList">
+            <ul id="list" className="c-FileList pure-u-1">
                 {fileItems}
             </ul>
         );

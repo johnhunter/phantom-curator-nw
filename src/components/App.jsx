@@ -78,7 +78,7 @@ module.exports = React.createClass({
         return false;
     },
     render: function() {
-        var rebaseBtnClass = 'pure-button pure-button-primary';
+        var rebaseBtnClass = 'primary-button pure-button';
         rebaseBtnClass += this.state.selectedCount ? '' : ' pure-button-disabled';
         var isSelectedAll = this.state.selectedState === 'all';
         var selectAllIcon = isSelectedAll ? 'icon-checkmark2' : 'icon-checkmark';
@@ -87,21 +87,36 @@ module.exports = React.createClass({
 
         return (
             <form className="c-App" onSubmit={this.handleRebase}>
-                <header className="navbar">
-                    <button className={rebaseBtnClass} type="submit" title="Rebase selected">
-                        <span className={this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }></span>
-                        <span className="count">{this.state.selectedCount}</span>
-                    </button>
-                    <button className="pure-button" onClick={this.toggleAll} title={isSelectedAll ? 'Select all' : 'Select none'}>
-                        <span className={selectAllIcon}></span>
-                        <span className={selectAllIcon}></span>
-                    </button>
-                    <button className="pure-button" onClick={this.handleRefresh} title="Refresh">
-                        <span className="icon-loop"></span>
-                    </button>
-                    <FolderPicker path={this.state.path} onSelect={this.handlePathUpdate} title="Select visual diff folder">
-                        <span className="icon-folder"></span>
-                    </FolderPicker>
+                <header id="nav" className="navbar pure-u">
+                    <a href="#" className="nav-menu-button">Menu</a>
+
+                    <div className="nav-inner">
+
+                        <button className={rebaseBtnClass} type="submit">
+                            <span className={this.state.selectedCount ? 'icon-remove' : 'icon-remove2' }></span>
+                            Rebase <span className="count">{this.state.selectedCount}</span>
+                        </button>
+
+                        <div className="pure-menu pure-menu-open">
+                             <ul>
+                                <li>
+                                    <a href="#" className="" onClick={this.toggleAll}>
+                                        {isSelectedAll ? 'Select none' : 'Select all' }
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" className="" onClick={this.handleRefresh}>
+                                        <span className="icon-loop"></span> Refresh
+                                    </a>
+                                </li>
+                                <li>
+                                    <FolderPicker path={this.state.path} onSelect={this.handlePathUpdate}>
+                                        <span className="icon-folder"></span> Select folder
+                                    </FolderPicker>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </header>
 
                 <FileList
