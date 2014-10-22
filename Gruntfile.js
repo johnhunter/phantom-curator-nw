@@ -23,7 +23,8 @@ module.exports = function(grunt) {
             assets: './src/assets/',
             libs: './src/libs/',
             build: './build/',
-            wkBuild: './webkitbuilds',
+            wkCache: './webkitbuilds/cache/',
+            wkRelease: './webkitbuilds/releases/',
             release: './webkitbuilds/releases/<%= pkg.name %>/'
         },
 
@@ -92,13 +93,13 @@ module.exports = function(grunt) {
 
         nodewebkit: {
             options: {
-                app_name: '<%= pkg.name %>',
-                app_version: '<%= pkg.version %>',
-                build_dir: '<%= paths.wkBuild %>',
-                mac: true,
-                win: true,
-                linux32: false,
-                linux64: false
+                appName: '<%= pkg.name %>',
+                appVersion: '<%= pkg.version %>',
+                buildDir: '<%= paths.wkRelease %>',
+                cacheDir: '<%= paths.wkCache %>',
+                platforms: ['win','osx'],
+                version: '0.10.5'
+
             },
             src: ['<%=paths.build %>**/*']
         },

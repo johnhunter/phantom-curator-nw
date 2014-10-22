@@ -8,6 +8,8 @@ src/assets/main.js
 src/assets/libs.js
 src/assets/styles.css
 
+webkitbuilds/
+
 # keep the built apps out of the repo until we can figure out where to keep the installers
 webkitbuilds/
 *.sublime-workspace
