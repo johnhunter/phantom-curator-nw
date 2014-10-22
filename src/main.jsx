@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var App = require('./components/App.jsx');
+var App = require('./app/views/App.jsx');
 
 React.renderComponent(
     <App />,

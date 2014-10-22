@@ -53,17 +53,6 @@ module.exports = function(grunt) {
             }
         },
 
-        // not used by browserify
-        react: {
-            files: {
-                expand: true,
-                cwd: '<%=paths.src%>',
-                src: ['**/*.jsx'],
-                dest: '<%=paths.assets%>',
-                ext: '.js'
-            }
-        },
-
         browserify: {
             // TODO: libs.js could be included with noParse
             options: {

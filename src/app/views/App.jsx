@@ -2,6 +2,7 @@
 
 var FolderPicker = require('./FolderPicker.jsx');
 var FileList     = require('./FileList.jsx');
+var listModel    = require('./../models/fileList');
 var storage      = window.localStorage;
 
 
@@ -20,6 +21,7 @@ module.exports = React.createClass({
         var self = this;
         if (!path) { return; }
         visdiffer.setRoot(path).getlist(function(list){
+            listModel.create(path, list);
             self.setState({
                 path: path,
                 list: list
