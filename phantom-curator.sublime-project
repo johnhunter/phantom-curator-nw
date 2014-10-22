@@ -12,6 +12,7 @@
 		"windows": {
 			"cmd": [
 				"cmd.exe",
+				"/c",
 				"grunt",
 				"build",
 				"--no-color"

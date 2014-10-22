@@ -10,5 +10,6 @@
     "position": "center",
     "min_width": 600,
     "min_height": 400
-  }
+  },
+  "chromium-args":"--enable-experimental-web-platform-features"
 }

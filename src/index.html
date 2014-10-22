@@ -14,7 +14,7 @@ var guiWin = gui.Window.get();
 
 // allow user to recover from node exceptions
 process.on("uncaughtException", function(e) {
-    if (window.confirm('Oh Dear - an error occured. Select Ok to quit and try again. If you want to investigate the problem select cancel.')) {
+    if (window.confirm('Oh Dear - an error occured.  Select Ok to quit and try again.\nIf you want to investigate the problem select cancel, the error will be logged in the console.')) {
         gui.App.quit();
         return;
     }
